@@ -3,6 +3,7 @@ from flask import Flask
 from flask.globals import request
 from flask.helpers import make_response
 from flask import redirect
+from flask import abort
 app = Flask(__name__)
 
 @app.route('/')
@@ -27,6 +28,12 @@ def cookie():
 @app.route('/redi')
 def redi():
     return redirect('http://localhost:5000/user/user_redirected')
+
+@app.route('/abort/<int:id>')
+def abort_method(id):
+    if id == 0:
+        abort(404)
+    return '<h1>Hello, user with id: %s!</h1>' % id
 
 if __name__ == '__main__':
     app.run(debug=True)
