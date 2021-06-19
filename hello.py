@@ -1,6 +1,7 @@
 from logging import debug
 from flask import Flask
 from flask.globals import request
+from flask.helpers import make_response
 app = Flask(__name__)
 
 @app.route('/')
@@ -15,6 +16,12 @@ def user(name):
 @app.route('/bad')
 def bad():
     return '<h1>Bad Request</h1>', 400
+
+@app.route('/cookie')
+def cookie():
+    response_one = make_response('<h1>This document carries a cookie!</h1>')
+    response_one.set_cookie('answer', '42')
+    return response_one
 
 if __name__ == '__main__':
     app.run(debug=True)
